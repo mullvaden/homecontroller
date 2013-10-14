@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeController.IntegrationT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeController.TelldusIntegration", "HomeController.TelldusIntegration\HomeController.TelldusIntegration.csproj", "{8F5EA7A5-2116-4E4B-BCA6-83957AE35B9A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeController.Service", "HomeController.Service\HomeController.Service.csproj", "{068602E8-1CED-41AF-8C20-64DB5B74AC9A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{458B1136-F013-48D4-AC97-612AD2C97100}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,8 +29,16 @@ Global
 		{8F5EA7A5-2116-4E4B-BCA6-83957AE35B9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F5EA7A5-2116-4E4B-BCA6-83957AE35B9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F5EA7A5-2116-4E4B-BCA6-83957AE35B9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{068602E8-1CED-41AF-8C20-64DB5B74AC9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{068602E8-1CED-41AF-8C20-64DB5B74AC9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{068602E8-1CED-41AF-8C20-64DB5B74AC9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{068602E8-1CED-41AF-8C20-64DB5B74AC9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{593CFFF9-330B-4F6B-805D-FD83C63D1F44} = {458B1136-F013-48D4-AC97-612AD2C97100}
+		{88431158-9281-46C0-B042-C421579B3044} = {458B1136-F013-48D4-AC97-612AD2C97100}
 	EndGlobalSection
 EndGlobal

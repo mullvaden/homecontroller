@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{593CFFF9-330B-4F6B-805D-FD83C63D1F44}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{068602E8-1CED-41AF-8C20-64DB5B74AC9A}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HomeController.IntegrationTests</RootNamespace>
-    <AssemblyName>HomeController.IntegrationTests</AssemblyName>
+    <RootNamespace>HomeController.Service</RootNamespace>
+    <AssemblyName>HomeController.Service</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -20,38 +22,39 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.2\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="Topshelf">
+      <HintPath>..\packages\Topshelf.3.1.1\lib\net40-full\Topshelf.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ServiceTests.cs" />
-    <Compile Include="TelldusTests.cs" />
+    <Compile Include="Poller.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\HomeController.Service\HomeController.Service.csproj">
-      <Project>{068602E8-1CED-41AF-8C20-64DB5B74AC9A}</Project>
-      <Name>HomeController.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\HomeController.TelldusIntegration\HomeController.TelldusIntegration.csproj">
+    <ProjectReference Include="..\HomeController.TelldusIntegration\HomeController.TelldusIntegration.csproj">
       <Project>{8F5EA7A5-2116-4E4B-BCA6-83957AE35B9A}</Project>
       <Name>HomeController.TelldusIntegration</Name>
     </ProjectReference>

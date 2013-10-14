@@ -35,16 +35,11 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dtos\TelldusDtos\Sensor.cs" />
-    <Compile Include="Dtos\TempSensor.cs" />
-    <Compile Include="HookUpTelldus.cs" />
+    <Compile Include="Dtos\TemperatureSensor.cs" />
+    <Compile Include="TelldusIntegrator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

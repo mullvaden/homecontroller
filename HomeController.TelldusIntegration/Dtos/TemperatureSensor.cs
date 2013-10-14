@@ -2,7 +2,7 @@
 
 namespace HomeController.TelldusIntegration.Dtos
 {
-    public class TempSensor
+    public class TemperatureSensor
     {
         public string Id { get; set; }
         public string Name { get; set; }

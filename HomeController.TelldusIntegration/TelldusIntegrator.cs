@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using HomeController.TelldusIntegration.Dtos;
@@ -9,7 +8,7 @@ using RestSharp.Authenticators;
 
 namespace HomeController.TelldusIntegration
 {
-    public class HookUpTelldus
+    public class TelldusIntegrator
     {
         private const string TelldusBaseUrl = "https://api.telldus.com/json";
         private string _publickey = "FEHUVEW84RAFR5SP22RABURUPHAFRUNU";
@@ -17,25 +16,13 @@ namespace HomeController.TelldusIntegration
         private string _token = "408b287b4c4cca887c20f4bf6179a3b70525acb9f";
         private string _tokenSecret = "b6f0efcf16e880a962dcb16ccf5b06f5";
 
-        public void Hookitup()
-        {
-            var client = new RestClient(TelldusBaseUrl);
-            client.Authenticator = OAuth1Authenticator.ForProtectedResource(_publickey, _privateKey, _token, _tokenSecret);
-            var request = new RestRequest("devices/list");
-            var response = client.Execute(request);
-            //client.ExecuteAsync(request, response =>
-            //{
-            //    TakeResponse();
-            //});
-        }
-
-        public List<TempSensor> GetSensors()
+        public List<TemperatureSensor> GetTemperatureSensors()
         {
             var client = new RestClient(TelldusBaseUrl);
             client.Authenticator = OAuth1Authenticator.ForProtectedResource(_publickey, _privateKey, _token, _tokenSecret);
             var request = new RestRequest("sensors/list");
             var response = client.Execute<SensorList>(request);
-            var tempSensors = new List<TempSensor>();
+            var tempSensors = new List<TemperatureSensor>();
             foreach (var sensor in response.Data.sensor)
             {
                 request = new RestRequest("sensor/info");
@@ -48,7 +35,7 @@ namespace HomeController.TelldusIntegration
                 if (temp != null)
                 {
                     var numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "." };
-                    tempSensors.Add(new TempSensor { Id = sensor.id, Name = sensor.name, LastUpdated = sensor.LastUpdated, Temperature = decimal.Parse(temp.value, numberFormatInfo) });
+                    tempSensors.Add(new TemperatureSensor { Id = sensor.id, Name = sensor.name, LastUpdated = sensor.LastUpdated, Temperature = decimal.Parse(temp.value, numberFormatInfo) });
                 }
             }
 
