@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using HomeController.TelldusIntegration.Dtos;
+using HomeController.TelldusIntegration.Dtos.TelldusDtos;
 using RestSharp;
 using RestSharp.Authenticators;
 
@@ -25,14 +29,32 @@ namespace HomeController.TelldusIntegration
             //});
         }
 
-        public List<Sensor> GetSensors()
+        public List<TempSensor> GetSensors()
         {
             var client = new RestClient(TelldusBaseUrl);
             client.Authenticator = OAuth1Authenticator.ForProtectedResource(_publickey, _privateKey, _token, _tokenSecret);
             var request = new RestRequest("sensors/list");
-            var response = client.Execute<RootObject>(request);
-            return response.Data.sensor;
-            
+            var response = client.Execute<SensorList>(request);
+            var tempSensors = new List<TempSensor>();
+            foreach (var sensor in response.Data.sensor)
+            {
+                request = new RestRequest("sensor/info");
+                request.Parameters.Add(new Parameter { Name = "id", Value = sensor.id, Type = ParameterType.GetOrPost });
+                var sensorresponse = client.Execute<SensorDetail>(request);
+                var sensorDetail = sensorresponse.Data;
+                if (sensorDetail == null)
+                    continue;
+                var temp = sensorDetail.data.FirstOrDefault(d => d.name == "temp");
+                if (temp != null)
+                {
+                    var numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "." };
+                    tempSensors.Add(new TempSensor { Id = sensor.id, Name = sensor.name, LastUpdated = sensor.LastUpdated, Temperature = decimal.Parse(temp.value, numberFormatInfo) });
+                }
+            }
+
+            return tempSensors;
+            //return response.Data.sensor;
+
         }
     }
 }

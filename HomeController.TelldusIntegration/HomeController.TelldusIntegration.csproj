@@ -42,7 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dtos\Sensor.cs" />
+    <Compile Include="Dtos\TelldusDtos\Sensor.cs" />
+    <Compile Include="Dtos\TempSensor.cs" />
     <Compile Include="HookUpTelldus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

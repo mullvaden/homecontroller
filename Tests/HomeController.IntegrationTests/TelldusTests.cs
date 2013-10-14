@@ -8,7 +8,7 @@ namespace HomeController.IntegrationTests
     public class TelldusTests
     {
         [Test]
-        public void hookTeldus()
+        public void HookTelldus()
         {
             var teller = new HookUpTelldus();
             teller.Hookitup();
@@ -23,7 +23,7 @@ namespace HomeController.IntegrationTests
             Assert.That(sensors.Count, Is.EqualTo(2));
             foreach (var sensor in sensors)
             {
-                Console.WriteLine(sensor.name + " " + sensor.LastUpdated);
+                Console.WriteLine(sensor.Id + " " + sensor.Name+ " " + sensor.Temperature + " " + sensor.LastUpdated);
             }
 
         }
