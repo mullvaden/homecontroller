@@ -14,7 +14,7 @@ namespace HomeController.TelldusIntegration
         private string _publickey = "FEHUVEW84RAFR5SP22RABURUPHAFRUNU";
         private string _privateKey = "ZUXEVEGA9USTAZEWRETHAQUBUR69U6EF";
         private string _token = "408b287b4c4cca887c20f4bf6179a3b70525acb9f";
-        private string _tokenSecret = "b6f0efcf16e880a962dcb16ccf5b06f4";
+        private string _tokenSecret = "b6f0efcf16e880a962dcb16ccf5b06f5S";
 
         public List<TemperatureSensor> GetTemperatureSensors(Subscriber subscriber)
         {

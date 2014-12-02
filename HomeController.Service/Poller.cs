@@ -14,30 +14,33 @@ namespace HomeController.Service
     public class Poller
     {
         private readonly IDataAccess _dataAccess;
-        private readonly Timer _mailingTimer;
-        private readonly Timer _statsTimer;
+        private readonly string _smtpserver;
+        private Timer _mailingTimer;
+        private Timer _statsTimer;
         private IEnumerable<Subscriber> _subscribers;
 
-        public Poller(DataAccess dataAccess)
+        public Poller(DataAccess dataAccess, string smtpserver)
         {
             _dataAccess = dataAccess;
+            _smtpserver = smtpserver;
             InitSubscribers();
-            _mailingTimer = new Timer(1000 * 60 * 30) { AutoReset = true };
-            _statsTimer = new Timer(1000) { AutoReset = true };
-            //_mailingTimer.Elapsed += MailingTimerElapsed;
-            _statsTimer.Elapsed += StatsTimerElapsed;
+            InitTimers();
+            _mailingTimer.Elapsed += (sender, e) => FetchAndMail();
+            _statsTimer.Elapsed += (sender, e) => StoreStats();
+            // Don't wait around or the service might not start fast enough
+            Task.Run(() => StoreStats());
+            Task.Run(() => FetchAndMail());
+        }
 
+        private void InitTimers()
+        {
+            _mailingTimer = new Timer(TimeSpan.FromHours(48).TotalMilliseconds) { AutoReset = true };
+            _statsTimer = new Timer(TimeSpan.FromMinutes(30).TotalMilliseconds) { AutoReset = true };
         }
 
         private void InitSubscribers()
         {
             _subscribers = _dataAccess.GetSubscribers();
-        }
-
-        private void StatsTimerElapsed(object sender, ElapsedEventArgs e)
-        {
-            Task.Run(() => StoreStats());
-            _statsTimer.Stop();
         }
 
         private void StoreStats()
@@ -46,18 +49,13 @@ namespace HomeController.Service
                 _dataAccess.StoreSensors(subscriber.Id, GetSensors(subscriber));
         }
 
-        private void MailingTimerElapsed(object sender, ElapsedEventArgs e)
-        {
-            FetchAndSend();
-        }
-
-        public void FetchAndSend()
+        public void FetchAndMail()
         {
             foreach (var subscriber in _subscribers)
             {
                 var sb = GetSensors(subscriber).ToStringy();
 
-                using (var smtpServer = new SmtpClient("test07", 25))
+                using (var smtpServer = new SmtpClient(_smtpserver, 25))
                 {
                     var mail = new MailMessage
                     {

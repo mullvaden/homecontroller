@@ -11,7 +11,9 @@ namespace HomeController.Service
             {
                 x.Service<Poller>(s =>
                 {
-                    s.ConstructUsing(name => new Poller(new DataAccess(ConfigurationManager.ConnectionStrings["StatsConnectionString"].ConnectionString)));
+                    s.ConstructUsing(name => new Poller(
+                        new DataAccess(ConfigurationManager.ConnectionStrings["StatsConnectionString"].ConnectionString),
+                        ConfigurationManager.AppSettings["SmtpServer"]));
                     s.WhenStarted(tc => tc.Start());
                     s.WhenStopped(tc => tc.Stop());
                     
