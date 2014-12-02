@@ -37,8 +37,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\Subscriber.cs" />
     <Compile Include="Dtos\TelldusDtos\Sensor.cs" />
     <Compile Include="Dtos\TemperatureSensor.cs" />
+    <Compile Include="Dtos\Utils.cs" />
     <Compile Include="TelldusIntegrator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

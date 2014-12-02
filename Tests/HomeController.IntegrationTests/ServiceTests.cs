@@ -10,7 +10,7 @@ namespace HomeController.IntegrationTests
         public void test_service()
         {
             // Arrange
-            var p = new Poller();
+            var p = new Poller(new DataAccess(""));
             // Act
             p.FetchAndSend();
             // Assert

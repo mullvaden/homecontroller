@@ -1,4 +1,5 @@
-﻿using Topshelf;
+﻿using System.Configuration;
+using Topshelf;
 
 namespace HomeController.Service
 {
@@ -10,7 +11,7 @@ namespace HomeController.Service
             {
                 x.Service<Poller>(s =>
                 {
-                    s.ConstructUsing(name => new Poller());
+                    s.ConstructUsing(name => new Poller(new DataAccess(ConfigurationManager.ConnectionStrings["StatsConnectionString"].ConnectionString)));
                     s.WhenStarted(tc => tc.Start());
                     s.WhenStopped(tc => tc.Stop());
                     

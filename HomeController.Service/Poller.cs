@@ -1,50 +1,94 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Net.Mail;
 using System.Text;
+using System.Threading.Tasks;
 using System.Timers;
+using EbaySweden.Trading.DatabaseAccess;
 using HomeController.TelldusIntegration;
+using HomeController.TelldusIntegration.Dtos;
 
 namespace HomeController.Service
 {
     public class Poller
     {
-        private readonly Timer _timer;
+        private readonly IDataAccess _dataAccess;
+        private readonly Timer _mailingTimer;
+        private readonly Timer _statsTimer;
+        private IEnumerable<Subscriber> _subscribers;
 
-        public Poller()
+        public Poller(DataAccess dataAccess)
         {
-            //_timer = new Timer(1000 * 60 * 30) { AutoReset = true };
-            _timer = new Timer(1000) { AutoReset = true };
-            _timer.Elapsed += _timer_Elapsed;
+            _dataAccess = dataAccess;
+            InitSubscribers();
+            _mailingTimer = new Timer(1000 * 60 * 30) { AutoReset = true };
+            _statsTimer = new Timer(1000) { AutoReset = true };
+            //_mailingTimer.Elapsed += MailingTimerElapsed;
+            _statsTimer.Elapsed += StatsTimerElapsed;
 
         }
 
-        private void _timer_Elapsed(object sender, ElapsedEventArgs e)
+        private void InitSubscribers()
+        {
+            _subscribers = _dataAccess.GetSubscribers();
+        }
+
+        private void StatsTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            Task.Run(() => StoreStats());
+            _statsTimer.Stop();
+        }
+
+        private void StoreStats()
+        {
+            foreach (var subscriber in _subscribers)
+                _dataAccess.StoreSensors(subscriber.Id, GetSensors(subscriber));
+        }
+
+        private void MailingTimerElapsed(object sender, ElapsedEventArgs e)
         {
             FetchAndSend();
-            _timer.Stop();
         }
 
         public void FetchAndSend()
         {
-            var teller = new TelldusIntegrator();
-            var sensors = teller.GetTemperatureSensors();
-            var sb = new StringBuilder();
-            foreach (var sensor in sensors)
+            foreach (var subscriber in _subscribers)
             {
-                sb.AppendLine(sensor.Id + " " + sensor.Name + " " + sensor.Temperature + " " + sensor.LastUpdated);
-            }
-            using (var smtpServer = new SmtpClient("test07", 25))
-            {
-                var mail = new MailMessage();
-                mail.From = new MailAddress("tellstick@numlock.se");
-                mail.Subject = "Sensor update " + DateTime.Now;
-                mail.To.Add("dbrunteson@ebay.com");
-                mail.Body = sb.ToString();
-                smtpServer.Send(mail);
+                var sb = GetSensors(subscriber).ToStringy();
+
+                using (var smtpServer = new SmtpClient("test07", 25))
+                {
+                    var mail = new MailMessage
+                    {
+                        From = new MailAddress("tellstick@numlock.se"),
+                        Subject = "Sensor update " + DateTime.Now
+                    };
+                    foreach (var addr in subscriber.Email.Split(';'))
+                        mail.To.Add(addr);
+                    mail.Body = sb.ToString();
+                    smtpServer.Send(mail);
+                }
             }
         }
 
-        public void Start() { _timer.Start(); }
-        public void Stop() { _timer.Stop(); }
+        private static IEnumerable<TemperatureSensor> GetSensors(Subscriber subscriber)
+        {
+            var teller = new TelldusIntegrator();
+            var sensors = teller.GetTemperatureSensors(subscriber);
+            return sensors;
+        }
+
+        public void Start()
+        {
+            _mailingTimer.Start();
+            _statsTimer.Start();
+        }
+
+        public void Stop()
+        {
+            _mailingTimer.Stop();
+            _statsTimer.Stop();
+        }
     }
 }
