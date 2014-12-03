@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using EbaySweden.Trading.DatabaseAccess;
 using HomeController.TelldusIntegration.Dtos;
@@ -9,6 +10,7 @@ namespace HomeController.Service
     {
         void StoreSensors(int subscriptionId, IEnumerable<TemperatureSensor> sensors);
         IEnumerable<Subscriber> GetSubscribers();
+        List<TemperatureSensor> GetTemperatureSensorsSince(int subscriptionId, int daysBack = 7);
     }
 
     public class DataAccess : IDataAccess
@@ -37,7 +39,7 @@ namespace HomeController.Service
 
         }
 
-        public IEnumerable< Subscriber> GetSubscribers()
+        public IEnumerable<Subscriber> GetSubscribers()
         {
             var reader = new ParametersAndReader<Subscriber>
             {
@@ -55,6 +57,28 @@ namespace HomeController.Service
             };
 
             return _db.PerformSpRead(reader, "GetSubscribers");
+        }
+
+        public List<TemperatureSensor> GetTemperatureSensorsSince(int subscriptionId, int daysBack = 7)
+        {
+           var reader = new ParametersAndReader<TemperatureSensor>
+            {
+                Parameters = p =>
+                {
+                    p.AddWithValue("@subscriptionId", subscriptionId);
+                    p.AddWithValue("@daysBack", daysBack);
+                },
+                RecordReader = r => new TemperatureSensor
+                {
+                    Id = r.GetDefault<string>("SensorId"),
+                    Name = r.GetDefault<string>("Name"),
+                    Temperature = r.GetDefault<decimal>("Temperature"),
+                    LastUpdated= r.GetDefault<DateTime>("LastUpdated"),
+                    
+                }
+            };
+
+            return _db.PerformSpRead(reader, "GetSensorsSince");  
         }
     }
 }

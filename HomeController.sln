@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeController.Tests", "Tests\Tests\Tests\HomeController.Tests.csproj", "{88431158-9281-46C0-B042-C421579B3044}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeController.IntegrationTests", "tests\HomeController.IntegrationTests\HomeController.IntegrationTests.csproj", "{593CFFF9-330B-4F6B-805D-FD83C63D1F44}"
@@ -10,6 +12,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeController.Service", "HomeController.Service\HomeController.Service.csproj", "{068602E8-1CED-41AF-8C20-64DB5B74AC9A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{458B1136-F013-48D4-AC97-612AD2C97100}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleChartSharp", "_OSS\GoogleChartSharp\GoogleChartSharp.csproj", "{7BAB046F-5A77-4DD6-B115-8A575634CA91}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OSS", "OSS", "{8AD10819-6C5C-48D1-B09E-61467DA9C4DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,12 +39,17 @@ Global
 		{068602E8-1CED-41AF-8C20-64DB5B74AC9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{068602E8-1CED-41AF-8C20-64DB5B74AC9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{068602E8-1CED-41AF-8C20-64DB5B74AC9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BAB046F-5A77-4DD6-B115-8A575634CA91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BAB046F-5A77-4DD6-B115-8A575634CA91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BAB046F-5A77-4DD6-B115-8A575634CA91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BAB046F-5A77-4DD6-B115-8A575634CA91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{593CFFF9-330B-4F6B-805D-FD83C63D1F44} = {458B1136-F013-48D4-AC97-612AD2C97100}
 		{88431158-9281-46C0-B042-C421579B3044} = {458B1136-F013-48D4-AC97-612AD2C97100}
+		{593CFFF9-330B-4F6B-805D-FD83C63D1F44} = {458B1136-F013-48D4-AC97-612AD2C97100}
+		{7BAB046F-5A77-4DD6-B115-8A575634CA91} = {8AD10819-6C5C-48D1-B09E-61467DA9C4DE}
 	EndGlobalSection
 EndGlobal
