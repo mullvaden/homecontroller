@@ -31,8 +31,8 @@ namespace HomeController.Service
             _mailingTimer.Elapsed += (sender, e) => FetchAndMail();
             _statsTimer.Elapsed += (sender, e) => StoreStats();
             // Don't wait around or the service might not start fast enough
-            //Task.Run(() => StoreStats());
-            //Task.Run(() => FetchAndMail());
+            Task.Run(() => StoreStats());
+            Task.Run(() => FetchAndMail());
         }
 
         private void InitTimers()
@@ -56,7 +56,9 @@ namespace HomeController.Service
         {
             foreach (var subscriber in _subscribers)
             {
-                var sb = GetTempSensors(subscriber).ToStringy();
+                var sensors = GetTempSensors(subscriber);
+                var sb = sensors.ToStringy();
+                //var body = Razor.Parse(Resources.SensorTemplate, new { Period = DateTime.Now.ToLongDateString(), Sensors = sensors }, "Stats");
 
                 using (var smtpServer = new SmtpClient(_smtpserver, 25))
                 {
@@ -64,7 +66,9 @@ namespace HomeController.Service
                     {
                         From = new MailAddress("tellstick@numlock.se"),
                         Subject = "Sensor update " + DateTime.Now,
-                        Body = sb.ToString(),
+                        //Body = body,
+                        Body = sb.ToString()
+                        //IsBodyHtml = true
                     };
                     foreach (var addr in subscriber.Email.Split(';'))
                         mail.To.Add(addr);

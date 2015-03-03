@@ -22,7 +22,7 @@ namespace HomeController.Service {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace HomeController.Service {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("HomeController.Service.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace HomeController.Service {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -72,7 +72,25 @@ namespace HomeController.Service {
         ///         /* General */ 
         ///         a {text-decoration:none;c [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string StatsTemplate {
+        public static string SensorTemplate {
+            get {
+                return ResourceManager.GetString("SensorTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+        ///&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+        ///   &lt;head&gt;
+        ///      &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+        ///      &lt;meta content=&quot;telephone=no&quot; name=&quot;format-detection&quot; /&gt;
+        ///      &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+        ///      &lt;title&gt;&lt;/title&gt;
+        ///      &lt;style type=&quot;text/css&quot;&gt;
+        ///         /* General */ 
+        ///         a {text-decoration:none;c [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string StatsTemplate {
             get {
                 return ResourceManager.GetString("StatsTemplate", resourceCulture);
             }

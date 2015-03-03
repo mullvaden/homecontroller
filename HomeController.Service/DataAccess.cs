@@ -30,7 +30,7 @@ namespace HomeController.Service
                 {
                     p.AddWithValue("@subscriptionId", subscriptionId);
                     p.AddWithValue("@sensorId", sensor.Id);
-                    p.AddWithValue("@name", sensor.Name);
+                    p.AddWithValue("@name", sensor.Name ?? "(no name set)");
                     p.AddWithValue("@Temperature", sensor.Temperature);
                     p.AddWithValue("@LastUpdated", sensor.LastUpdated);
                 });
